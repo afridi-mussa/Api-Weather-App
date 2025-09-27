@@ -31,7 +31,9 @@ Example from api.js:
 
 if (!response.ok) {
   if (response.status === 404) throw new Error("City not found!"); // Invalid city name
+  
   if (response.status === 429) throw new Error("API limit exceeded!"); // Too many requests
+  
   throw new Error("Failed to fetch weather data."); // Other server/network error
 }
 
