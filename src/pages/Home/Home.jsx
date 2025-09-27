@@ -22,9 +22,11 @@ const Home = () => {
     setWeather(null);
 
     try {
+      const startTime = Date.now(); // track start time
+
       const data = await fetchWeather(city);
 
-      // Save to history when searched
+      // Save to history
       let prevHistory = JSON.parse(localStorage.getItem("weatherHistory")) || [];
       const newEntry = {
         city,
@@ -32,16 +34,24 @@ const Home = () => {
         timestamp: new Date().toLocaleString(),
       };
 
+      // Avoid duplicate cities, keep max 5
       prevHistory = [newEntry, ...prevHistory.filter((h) => h.city !== city)];
       if (prevHistory.length > 5) prevHistory.pop();
 
       localStorage.setItem("weatherHistory", JSON.stringify(prevHistory));
 
       setWeather(data);
+
+      // ⏳ Ensure spinner lasts at least 1.5s
+      const elapsed = Date.now() - startTime;
+      const delay = Math.max(0, 1500 - elapsed);
+      setTimeout(() => setLoading(false), delay);
+
     } catch (err) {
       setError(err.message || "Something went wrong!");
-    } finally {
-      setLoading(false);
+
+      // still keep loader for at least 1.5s
+      setTimeout(() => setLoading(false), 1500);
     }
   };
 
@@ -67,7 +77,6 @@ const Home = () => {
         {weather && <WeatherCard data={weather} />}
       </div>
 
-      
       <History />
     </div>
   );
