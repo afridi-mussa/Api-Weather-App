@@ -1,0 +1,39 @@
+.weather-card {
+  background: var(--glass-bg);
+  border-radius: 15px;
+  padding: 25px;
+  margin-top: 20px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.weather-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+}
+
+.weather-icon {
+  width: 90px;
+  height: 90px;
+  margin: 10px 0;
+}
+
+.temp {
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+.condition {
+  font-style: italic;
+  text-transform: capitalize;
+  opacity: 0.9;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
